@@ -1,6 +1,6 @@
 # AyonPDFMerger
 # Merge PDF files easily.
-# 'outputFileName' (extension .pdf not mandatory) is the output PDF file name. 
+# 'outputFileName' (extension .pdf not mandatory) is the output PDF file name.
 # If not specified, it'll be 'result.pdf' and will be written to the least
 # common directory of the param files.
 # Usage 1:
@@ -36,12 +36,12 @@ def mergePDFFiles(pdfs, resultFileName):
 def getPDFFilesInFolder(folder):
 	pattern = '*.pdf'
 	pdfFiles = []
-	
+
 	# Get all files.
 	allFiles = os.listdir(folder)
 
 		# Keep only .pdf files.
-	for file in allFiles:  
+	for file in allFiles:
 		if fnmatch.fnmatch(file, pattern):
 			pdfFiles.append(os.path.abspath(os.path.join(folder + os.sep + file)))
 
@@ -77,9 +77,9 @@ def getPDFFilesToMerge(cmdArgs):
 	try:
 		optionList, files = getopt.getopt(cmdArgs, ':o:')
 	except getopt.GetoptError as err:
-		print(err) 
+		print(err)
 		sys.exit(2)
-	
+
 	# Get output file and file count.
 	output = None
 	fileCount = len(files)
@@ -88,7 +88,7 @@ def getPDFFilesToMerge(cmdArgs):
 			if option in ('-o', '--output'):
 				output = optionValue
 			else:
-				print('unhandled option: ' + option) 
+				print('unhandled option: ' + option)
 
 	# Ensure the output file has the .pdf extension.
 	if output != None:
@@ -109,11 +109,11 @@ def getPDFFilesToMerge(cmdArgs):
 				# Get all .pdf files in the directory.
 				retrievedFiles = getPDFFilesInFolder(filePath)
 				validFiles.extend(retrievedFiles)
-				
+
 				if output == None:
 					# Output will be in the same directory.
-					output = os.path.abspath(os.path.join(filePath + os.sep + output))
-				
+					output = os.path.abspath(os.path.join(filePath + os.sep + defaultOutputName))
+
 			elif fileExtension == '.txt':
 				# Get all .pdf files in the .txt file.
 				retrievedFiles = getPDFFilesInTextFile(os.path.abspath(file_0))
@@ -132,7 +132,7 @@ def getPDFFilesToMerge(cmdArgs):
 				if fileExtension.lower() == '.pdf':
 					retrievedFiles.append(file)
 				else:
-					print('ignored file: ' + file) 
+					print('ignored file: ' + file)
 				validFiles.extend(retrievedFiles)
 
 				if output == None:
@@ -157,8 +157,8 @@ if __name__ == '__main__':
 	# Print output file.
 	print('Output:')
 	print(' >> ' + outputFile)
-	
+
 	# Merge files.
-	print('Merging...')    
+	print('Merging...')
 	mergePDFFiles(inputFiles, outputFile)
 	print('Done.')
